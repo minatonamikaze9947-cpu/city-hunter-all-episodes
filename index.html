@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>City Hunter · sketchbook archive</title>
+  <!-- Fonts for hand-drawn & body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:opsz@14..32&family=IBM+Plex+Sans:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #FAF8F2; /* warm ivory paper */
+      font-family: 'Inter', 'IBM Plex Sans', sans-serif;
+      color: #1e1e1e;
+      padding: 20px 24px 40px;
+      line-height: 1.6;
+      position: relative;
+    }
+    /* subtle paper grain + blueprint lines */
+    body::before {
+      content: '';
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background-image: 
+        linear-gradient(rgba(200,200,200,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,200,200,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+    }
+
+    /* ----- hand-drawn helpers (ink borders, sketch shadow) ----- */
+    .ink-border {
+      border: 2px solid #222;
+      border-radius: 20px 20px 20px 4px;
+      position: relative;
+      background: #FCFBF7;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.04), 8px 8px 0 rgba(0,0,0,0.02);
+      transition: all 0.15s ease;
+    }
+    .ink-border:hover {
+      border-color: #000;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.06), 12px 12px 0 rgba(0,0,0,0.03);
+    }
+    /* sketch shadow = cross-hatch illusion */
+    .sketch-shadow {
+      position: relative;
+    }
+    .sketch-shadow::after {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; width: 100%; height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 6px);
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    /* ----- typography ----- */
+    .hand { font-family: 'Caveat', 'Patrick Hand', cursive; }
+    .hand-heading { font-family: 'Caveat', cursive; font-weight: 700; letter-spacing: -0.01em; }
+    .body-sans { font-family: 'Inter', 'IBM Plex Sans', sans-serif; }
+
+    /* search (hand-drawn box) - moved to top right */
+    .search-wrap {
+      display: flex; justify-content: flex-end; margin-bottom: 12px;
+    }
+    .search-box {
+      border: 2px solid #222; border-radius: 40px 8px 40px 8px;
+      padding: 6px 16px;
+      background: #FCFBF7;
+      display: flex; align-items: center;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+      transition: 0.15s;
+      max-width: 300px;
+    }
+    .search-box:focus-within {
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.08);
+      border-color: #000;
+    }
+    .search-box input {
+      border: none; background: transparent; font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; padding: 6px 0; width: 180px; outline: none;
+      color: #1e1e1e;
+    }
+    .search-box input::placeholder {
+      font-family: 'Caveat', cursive; color: #777; font-size: 1.05rem;
+    }
+    .search-box .icon {
+      font-size: 1.2rem; margin-right: 6px; color: #444;
+    }
+
+    /* hero */
+    .hero {
+      display: flex; flex-wrap: wrap; align-items: center;
+      padding: 20px 0 20px; gap: 30px;
+      border-bottom: 2px dashed #ccc;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .hero::before {
+      content: '✧  page 1  ✧';
+      position: absolute; right: 0; bottom: -18px;
+      font-family: 'Caveat', cursive; font-size: 0.9rem; color: #888;
+    }
+    .hero-text { flex: 1 1 280px; }
+    .hero h1 {
+      font-family: 'Caveat', cursive; font-size: 4.2rem; font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+      border-left: 4px solid #222; padding-left: 16px;
+    }
+    .hero h1 small {
+      display: block; font-size: 2rem; color: #4F46E5;
+      font-weight: 600;
+    }
+    .hero p {
+      font-size: 1.15rem; color: #2c2c2c; margin: 14px 0 18px;
+      font-family: 'Inter', sans-serif;
+      background: rgba(255,255,240,0.4); padding: 8px 12px;
+      border-radius: 0 12px 0 12px;
+      border-left: 2px solid #222;
+    }
+    .badges {
+      display: flex; flex-wrap: wrap; gap: 12px 20px;
+      font-family: 'Caveat', cursive; font-size: 1.1rem;
+    }
+    .badges span {
+      border: 2px solid #222; border-radius: 40px 4px 40px 4px;
+      padding: 2px 16px 2px 12px;
+      background: #FCFBF7;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.03);
+    }
+    .btn-ink {
+      border: 2px solid #222; border-radius: 40px 6px 40px 6px;
+      background: transparent; padding: 10px 32px;
+      font-family: 'Caveat', cursive; font-weight: 600; font-size: 1.2rem;
+      cursor: pointer; transition: 0.2s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+      color: #222;
+      margin-top: 12px;
+    }
+    .btn-ink:hover {
+      background: #222; color: #FAF8F2;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.08);
+      border-color: #000;
+    }
+    .hero-art {
+      flex: 1 1 200px; text-align: center;
+      border: 2px solid #222; border-radius: 40px 8px 40px 8px;
+      padding: 16px; background: #FCFBF7;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.03);
+    }
+    .hero-art img {
+      width: 100%; height: auto; border-radius: 12px; display: block;
+    }
+
+    /* info cards */
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 18px; margin: 20px 0; }
+    .card-info {
+      padding: 16px 14px; background: #FCFBF7;
+      border: 2px solid #222; border-radius: 20px 4px 20px 4px;
+      transition: 0.15s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+    }
+    .card-info:hover {
+      border-color: #000; box-shadow: 5px 5px 0 rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .card-info .icon { font-size: 1.4rem; }
+    .card-info .label { font-family: 'Caveat', cursive; font-size: 0.9rem; color: #555; }
+    .card-info .value { font-weight: 500; font-size: 1rem; }
+
+    /* stats */
+    .stats-row {
+      display: flex; flex-wrap: wrap; justify-content: space-around;
+      border: 2px solid #222; border-radius: 40px 8px 40px 8px;
+      padding: 24px 20px; background: #FCFBF7; margin: 30px 0;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.03);
+    }
+    .stat-item { text-align: center; }
+    .stat-number { font-family: 'Caveat', cursive; font-size: 2.8rem; font-weight: 700; }
+    .stat-label { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #444; }
+
+    /* timeline */
+    .timeline {
+      display: flex; flex-direction: column; gap: 8px;
+      margin: 20px 0 30px; padding-left: 20px;
+      border-left: 3px solid #222;
+    }
+    .timeline-item {
+      display: flex; align-items: baseline; gap: 20px;
+      padding: 4px 0;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '●'; position: absolute; left: -30px;
+      font-size: 1.2rem; color: #222;
+    }
+    .timeline-year { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.5rem; min-width: 70px; }
+    .timeline-desc { font-family: 'Inter', sans-serif; font-size: 1rem; }
+
+    /* seasons */
+    .season-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 20px; margin: 16px 0; }
+    .season-card {
+      border: 2px solid #222; border-radius: 24px 4px 24px 4px;
+      padding: 16px; background: #FCFBF7;
+      transition: 0.15s; box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+    }
+    .season-card:hover { border-color: #000; box-shadow: 5px 5px 0 rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .season-card h4 { font-family: 'Caveat', cursive; font-size: 1.5rem; }
+    .season-card .meta { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #444; }
+
+    /* episodes */
+    .episode-controls { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; align-items: center; }
+    .episode-controls input, .episode-controls select {
+      border: 2px solid #222; border-radius: 40px 4px 40px 4px;
+      padding: 6px 16px; font-family: 'Inter', sans-serif;
+      background: #FCFBF7; font-size: 0.95rem;
+    }
+    .episode-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+    .episode-item {
+      border: 2px solid #222; border-radius: 20px 4px 20px 4px;
+      padding: 14px 18px; background: #FCFBF7;
+      transition: 0.15s; box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+      cursor: pointer;
+    }
+    .episode-item:hover { border-color: #000; box-shadow: 5px 5px 0 rgba(0,0,0,0.06); }
+    .episode-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; }
+    .episode-title { font-family: 'Caveat', cursive; font-size: 1.2rem; font-weight: 600; }
+    .episode-meta { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #555; display: flex; gap: 12px; flex-wrap: wrap; }
+    .episode-actions button {
+      background: transparent; border: none; font-size: 1.2rem; cursor: pointer;
+      padding: 0 4px; color: #444; transition: 0.15s;
+    }
+    .episode-actions button:hover { color: #000; transform: scale(1.1); }
+    .episode-detail { margin-top: 10px; border-top: 2px dashed #aaa; padding-top: 10px; display: none; font-family: 'Inter', sans-serif; }
+    .episode-item.expanded .episode-detail { display: block; }
+
+    /* characters, movies, gallery, trivia */
+    .char-grid, .movie-grid, .gallery-grid, .trivia-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 20px; margin: 16px 0;
+    }
+    .char-card, .movie-card, .gallery-item, .trivia-card {
+      border: 2px solid #222; border-radius: 24px 4px 24px 4px;
+      padding: 16px; background: #FCFBF7; transition: 0.15s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.04);
+    }
+    .char-card:hover, .movie-card:hover, .gallery-item:hover, .trivia-card:hover {
+      border-color: #000; box-shadow: 5px 5px 0 rgba(0,0,0,0.06); transform: translateY(-2px);
+    }
+    .char-card strong { font-family: 'Caveat', cursive; font-size: 1.4rem; display: block; }
+    .char-card .role { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #444; }
+
+    .quote-carousel {
+      border: 2px solid #222; border-radius: 40px 8px 40px 8px;
+      padding: 20px 28px; background: #FCFBF7; margin: 16px 0;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.03);
+    }
+    .quote-carousel div { font-family: 'Caveat', cursive; font-size: 1.3rem; padding: 4px 0; }
+
+    .accordion {
+      border: 2px solid #222; border-radius: 20px 4px 20px 4px;
+      padding: 6px 20px; margin: 6px 0; background: #FCFBF7;
+    }
+    .accordion summary { font-family: 'Caveat', cursive; font-size: 1.2rem; cursor: pointer; padding: 10px 0; }
+
+    /* section titles */
+    .section-title {
+      font-family: 'Caveat', cursive; font-size: 2.4rem; font-weight: 700;
+      margin: 40px 0 12px;
+      border-bottom: 2px dashed #aaa; padding-bottom: 4px;
+      display: inline-block;
+    }
+
+    /* responsiveness */
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 3rem; }
+      .search-box input { width: 120px; }
+      .search-wrap { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- search (top right) -->
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="icon">✎</span>
+      <input type="text" placeholder="search episodes..." id="globalSearch">
+    </div>
+  </div>
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="hero-text">
+      <h1>City Hunter <small>1987–1991</small></h1>
+      <p>Japanese action-comedy detective anime created by Tsukasa Hojo.</p>
+      <div class="badges">
+        <span>⭐ 8.2</span><span>📅 1987-1991</span><span>🎬 140</span><span>📺 4</span><span>🏢 Sunrise</span>
+      </div>
+      <button class="btn-ink" onclick="document.getElementById('episodesSection').scrollIntoView({behavior:'smooth'})">Browse Episodes</button>
+    </div>
+    <div class="hero-art">
+      <!-- REPLACE this img with your poster URL -->
+      <img 
+        src="https://i.pinimg.com/736x/02/1d/88/021d885718b646330be88453438edbba.jpg" 
+        alt="City Hunter poster art" 
+        style="width:100%; height:auto; border-radius:12px; display:block;"
+      />
+    </div>
+  </div>
+
+  <!-- info cards -->
+  <div class="grid-4" id="infoCards"></div>
+
+  <!-- stats -->
+  <div class="stats-row" id="statsRow"></div>
+
+  <!-- timeline -->
+  <div class="section-title">Timeline</div>
+  <div class="timeline" id="timeline"></div>
+
+  <!-- seasons -->
+  <div class="section-title">Seasons</div>
+  <div class="season-grid" id="seasonsGrid"></div>
+
+  <!-- episodes -->
+  <div class="section-title" id="episodesSection">Episodes</div>
+  <div class="episode-controls">
+    <input type="text" id="epSearch" placeholder="filter episodes..." style="flex:1;min-width:130px;">
+    <select id="seasonFilter"><option value="">All Seasons</option><option value="1">S1</option><option value="2">S2</option><option value="3">S3</option><option value="4">S4</option></select>
+    <span style="font-family:'Caveat';font-size:1.1rem;" id="epCount"></span>
+  </div>
+  <div class="episode-grid" id="episodeGrid"></div>
+
+  <!-- characters -->
+  <div class="section-title">Main Characters</div>
+  <div class="char-grid" id="charGrid"></div>
+
+  <!-- movies -->
+  <div class="section-title">Movies</div>
+  <div class="movie-grid" id="movieGrid"></div>
+
+  <!-- gallery -->
+  <div class="section-title">Gallery</div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <!-- quotes -->
+  <div class="section-title">Quotes</div>
+  <div class="quote-carousel" id="quoteCarousel"></div>
+
+  <!-- music & trivia -->
+  <div style="display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;">
+    <div style="flex:1;min-width:180px;"><h3 class="hand-heading" style="font-size:1.8rem;">🎵 Opening</h3><div id="musicOpen"></div></div>
+    <div style="flex:1;min-width:180px;"><h3 class="hand-heading" style="font-size:1.8rem;">🎵 Ending</h3><div id="musicEnd"></div></div>
+  </div>
+  <div class="section-title">Trivia</div>
+  <div class="trivia-grid" id="triviaGrid"></div>
+
+  <!-- FAQ -->
+  <div class="section-title">FAQ</div>
+  <div id="faqContainer"></div>
+
+  <!-- subtle paper clip / end note -->
+  <div style="margin-top:40px; text-align:right; font-family:'Caveat', cursive; color:#888; border-top:2px dashed #ccc; padding-top:16px;">
+    ✧ end of archive · hand-drawn with ink ✧
+  </div>
+</div>
+
+<script>
+  // ----- generate 140 episodes -----
+  const EPISODES = [];
+  let epNum = 1;
+  const seasons = [1,2,3,4];
+  const titles = ["City Hunter", "City Hunter 2", "City Hunter 3", "City Hunter '91"];
+  const jp = ["シティーハンター", "シティーハンター2", "シティーハンター3", "シティーハンター'91"];
+  const synopses = ["Ryo takes on a new case in Tokyo.", "The mysterious detective returns.", "A dangerous mission unfolds.", "Ryo and Kaori face new threats."];
+  seasons.forEach((s, idx) => {
+    let count = s === 1 ? 51 : s === 2 ? 63 : s === 3 ? 13 : 13;
+    for (let i=1; i<=count; i++) {
+      EPISODES.push({
+        number: epNum++,
+        season: s,
+        english: `${titles[idx]} Ep ${i}`,
+        japanese: `${jp[idx]} 第${i}話`,
+        airDate: `198${s+6}-${String(i%12+1).padStart(2,'0')}-${String(i%28+1).padStart(2,'0')}`,
+        runtime: "24 min",
+        synopsis: synopses[idx % synopses.length] + ` (episode ${i})`,
+        rating: (4 + Math.random()*2).toFixed(1)
+      });
+    }
+  });
+
+  // static data
+  const infoData = [
+    {icon:'📖', label:'Story', value:'Action / Comedy / Detective'},
+    {icon:'🎭', label:'Genre', value:'Action, Comedy, Mystery'},
+    {icon:'🏢', label:'Studio', value:'Sunrise'},
+    {icon:'📅', label:'Original Run', value:'1987–1991'},
+    {icon:'🗣️', label:'Language', value:'Japanese'},
+    {icon:'📰', label:'Manga', value:'1985–1991'},
+    {icon:'🔄', label:'Status', value:'Completed'},
+    {icon:'👥', label:'Demographic', value:'Shounen'},
+    {icon:'📺', label:'Network', value:'Nippon TV'},
+    {icon:'⏳', label:'Runtime', value:'24 min/ep'}
+  ];
+  const stats = [
+    {num:'140', label:'Episodes'},{num:'4', label:'Seasons'},{num:'5', label:'Movies'},{num:'2', label:'TV Specials'},{num:'1987–1991', label:'Original Run'}
+  ];
+  const timeline = [
+    {year:'1987', desc:'Season 1 · 51 episodes'},{year:'1988', desc:'Season 2 · 63 episodes'},
+    {year:'1989', desc:'Season 3 · 13 episodes'},{year:'1991', desc:'Season 4 · 13 episodes'}
+  ];
+  const seasonsData = [
+    {title:'Season 1', year:'1987', eps:51, desc:'The beginning.'},{title:'Season 2', year:'1988', eps:63, desc:'More cases.'},
+    {title:'Season 3', year:'1989', eps:13, desc:'Short but intense.'},{title:'Season 4', year:'1991', eps:13, desc:'Final season.'}
+  ];
+  const characters = [
+    {name:'Ryo Saeba', role:'Protagonist', bio:'Sweeper, pervert but genius.'},
+    {name:'Kaori Makimura', role:'Partner', bio:'Strong, caring, wields a 100t hammer.'},
+    {name:'Umibozu', role:'Rival', bio:'Vigilante, powerful.'},
+    {name:'Saeko Nogami', role:'Detective', bio:'Police detective, ally.'},
+    {name:'Miki', role:'Friend', bio:'Younger sister figure.'},
+    {name:'Hideyuki Makimura', role:'Kaori\'s brother', bio:'Original partner.'}
+  ];
+  const movies = [
+    {title:'City Hunter: .357 Magnum', year:'1989', runtime:'90 min', desc:'First movie.'},
+    {title:'City Hunter: Bay City Wars', year:'1990', runtime:'80 min', desc:'Second movie.'},
+    {title:'City Hunter: Million Dollar Conspiracy', year:'1990', runtime:'75 min', desc:'Third movie.'}
+  ];
+  const gallery = ['🖼️ Still 1','🖼️ Poster','🖼️ Character art','🖼️ Landscape','🖼️ Still 2','🖼️ Key visual'];
+  const quotes = ['“Get ready, because I’m the City Hunter!” — Ryo', '“You pervert!” — Kaori', '“Justice always wins.” — Umibozu'];
+  const trivia = ['Created by Tsukasa Hojo','Inspired by noir films','Ryo’s favorite gun: Colt Python','Over 140 episodes produced'];
+  const faq = [{q:'Is City Hunter complete?', a:'Yes, the anime ended in 1991.'},{q:'Where to watch?', a:'Available on various streaming platforms.'}];
+
+  // render functions
+  function renderInfo() {
+    document.getElementById('infoCards').innerHTML = infoData.map(d => `
+      <div class="card-info"><div class="icon">${d.icon}</div><div class="label">${d.label}</div><div class="value">${d.value}</div></div>
+    `).join('');
+  }
+  function renderStats() {
+    document.getElementById('statsRow').innerHTML = stats.map(s => `<div class="stat-item"><div class="stat-number">${s.num}</div><div class="stat-label">${s.label}</div></div>`).join('');
+  }
+  function renderTimeline() {
+    document.getElementById('timeline').innerHTML = timeline.map(t => `<div class="timeline-item"><span class="timeline-year">${t.year}</span><span class="timeline-desc">${t.desc}</span></div>`).join('');
+  }
+  function renderSeasons() {
+    document.getElementById('seasonsGrid').innerHTML = seasonsData.map(s => `
+      <div class="season-card"><h4>${s.title}</h4><div class="meta">${s.year} · ${s.eps} eps</div><p>${s.desc}</p><button class="btn-ink" style="padding:2px 20px;font-size:0.9rem;">view</button></div>
+    `).join('');
+  }
+  function renderEpisodes(filter='', season='') {
+    const grid = document.getElementById('episodeGrid');
+    let list = EPISODES;
+    if (season) list = list.filter(e => e.season == season);
+    if (filter) list = list.filter(e => e.english.toLowerCase().includes(filter.toLowerCase()) || e.japanese.includes(filter) || e.number.toString().includes(filter));
+    document.getElementById('epCount').textContent = `${list.length} episodes`;
+    grid.innerHTML = list.map(ep => `
+      <div class="episode-item">
+        <div class="episode-header">
+          <div><span class="episode-title">#${ep.number} ${ep.english}</span> <span style="font-size:0.8rem;color:#555;">${ep.japanese}</span></div>
+          <div class="episode-meta">S${ep.season} · ${ep.airDate} · ${ep.runtime}</div>
+          <div class="episode-actions">
+            <button onclick="event.stopPropagation();alert('⭐ ${ep.rating}')">⭐</button>
+            <button onclick="event.stopPropagation();alert('bookmark')">🔖</button>
+            <button onclick="event.stopPropagation();this.closest('.episode-item').classList.toggle('expanded')">↕</button>
+          </div>
+        </div>
+        <div class="episode-detail">
+          <p>${ep.synopsis}</p>
+          <div style="display:flex;gap:12px;font-size:0.8rem;color:#555;margin-top:6px;"><span>🎞️ thumbnail</span><span>⭐ ${ep.rating}</span></div>
+          <div style="margin-top:6px;display:flex;gap:10px;"><button class="btn-ink" style="padding:2px 14px;font-size:0.8rem;">prev</button><button class="btn-ink" style="padding:2px 14px;font-size:0.8rem;">next</button></div>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.episode-item .episode-header').forEach(h => {
+      h.addEventListener('click', function(e) {
+        if (e.target.closest('.episode-actions')) return;
+        this.closest('.episode-item').classList.toggle('expanded');
+      });
+    });
+  }
+  function renderCharacters() {
+    document.getElementById('charGrid').innerHTML = characters.map(c => `<div class="char-card"><strong>${c.name}</strong><div class="role">${c.role}</div><p style="font-size:0.9rem;">${c.bio}</p></div>`).join('');
+  }
+  function renderMovies() {
+    document.getElementById('movieGrid').innerHTML = movies.map(m => `<div class="movie-card"><strong>${m.title}</strong><div>${m.year} · ${m.runtime}</div><p>${m.desc}</p><button class="btn-ink" style="padding:2px 16px;font-size:0.8rem;">IMDb</button></div>`).join('');
+  }
+  function renderGallery() {
+    document.getElementById('galleryGrid').innerHTML = gallery.map(g => `<div class="gallery-item" style="text-align:center;padding:14px;">${g}</div>`).join('');
+  }
+  function renderQuotes() {
+    document.getElementById('quoteCarousel').innerHTML = quotes.map(q => `<div>“${q}”</div>`).join('');
+  }
+  function renderMusic() {
+    document.getElementById('musicOpen').innerHTML = ['“City Hunter” by TM Network','“Go Go Heaven”'].map(s => `<div>🎵 ${s}</div>`).join('');
+    document.getElementById('musicEnd').innerHTML = ['“Get Wild” by TM Network','“Super Girl”'].map(s => `<div>🎵 ${s}</div>`).join('');
+  }
+  function renderTrivia() {
+    document.getElementById('triviaGrid').innerHTML = trivia.map(t => `<div class="trivia-card">✧ ${t}</div>`).join('');
+  }
+  function renderFaq() {
+    document.getElementById('faqContainer').innerHTML = faq.map(f => `<div class="accordion"><details><summary>${f.q}</summary><p style="padding:6px 0;">${f.a}</p></details></div>`).join('');
+  }
+
+  // init
+  document.addEventListener('DOMContentLoaded', function() {
+    renderInfo(); renderStats(); renderTimeline(); renderSeasons(); renderEpisodes();
+    renderCharacters(); renderMovies(); renderGallery(); renderQuotes(); renderMusic(); renderTrivia(); renderFaq();
+
+    document.getElementById('epSearch').addEventListener('input', function() {
+      const s = document.getElementById('seasonFilter').value;
+      renderEpisodes(this.value, s);
+    });
+    document.getElementById('seasonFilter').addEventListener('change', function() {
+      const q = document.getElementById('epSearch').value;
+      renderEpisodes(q, this.value);
+    });
+    document.getElementById('globalSearch').addEventListener('input', function() {
+      document.getElementById('epSearch').value = this.value;
+      const s = document.getElementById('seasonFilter').value;
+      renderEpisodes(this.value, s);
+    });
+  });
+</script>
+</body>
+</html>
